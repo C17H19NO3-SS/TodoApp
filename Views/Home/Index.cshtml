@@ -1,0 +1,39 @@
+﻿@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="h-[100vh] w-full flex items-center justify-center font-sans">
+    <div class="bg-neutral-950 shadow p-6 m-4 min-w-[310px] text-white border !border-zinc-700 rounded-lg">
+        <div class="mb-4">
+            <h1 class="text-grey-darkest text-xl font-sans">Todo List</h1>
+            <form asp-action="AddTodo" method="post" class="flex space-x-0 mt-4">
+                <input type="text" name="title" class="bg-zinc-700 appearance-none outline-none w-full py-2 pl-2 text-zinc-400 rounded-l-lg rounded-y-lg" placeholder="Add Todo">
+                <button class="hover:bg-zinc-800 bg-zinc-700 px-3 py-2 transition-all duration-300 rounded-r-lg text-black">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </form>
+        </div>
+        <div>
+            @for(var i = 0; i <= Model.list.Count-1; i++)
+            {
+                @await Component.InvokeAsync("TodoItem", Model.list[i]);
+            }
+        </div>
+    </div>
+</div>
+@if (Model.ok != null)
+{
+    if(Model.ok == 1)
+    {
+        <script>
+            toastr.success("İşlem başarılı.");
+        </script>
+    }
+    else if(Model.ok == 0)
+    {
+        <script>
+            toastr.error("İşlem başarısız.");
+        </script>
+    }
+}

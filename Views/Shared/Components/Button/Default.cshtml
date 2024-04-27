@@ -1,0 +1,11 @@
+﻿@model ButtonProps
+
+<form asp-action="@Model.Action" method="@Model.Method">
+    @foreach(var input in Model.Input)
+    {
+        <div class="hidden">
+            <input type="@input.Type" value="@input.Value" name="@input.Name" class="hidden" />
+        </div>
+    }
+    <button type="submit" class="@Model.ClassNames">@Html.Raw(Model.Text)</button>
+</form>

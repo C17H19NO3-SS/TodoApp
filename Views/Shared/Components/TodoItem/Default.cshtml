@@ -1,0 +1,80 @@
+﻿@model Todo
+
+@if(Model.IsEnded) {
+    <div class="flex mb-4 items-center bg-green-500 rounded-lg pl-2 min-w-[300px] text-black">
+        <p class="w-full text-grey-darkest">@Model.Title</p>
+        @{
+            List<InputProps> list = new List<InputProps>();
+            list.Add(new InputProps
+                {
+                    Type = "text",
+                    Value = Model.ID,
+                    Name = "id"
+                });
+            list.Add(new InputProps
+                {
+                    Type = "text",
+                    Value = 0,
+                    Name = "isended"
+                });
+        }
+        @await Component.InvokeAsync("Button", new ButtonProps
+        {
+            ClassNames = "hover:bg-green-600 px-3 py-2 transition-all duration-300",
+            Action = "SetEnded",
+            Method = "post",
+            Text = "<i class=\"fa-solid fa-xmark\"></i>",
+            Input = list
+        })
+        @{
+            list.RemoveAt(1);
+        }
+        @await Component.InvokeAsync("Button", new ButtonProps
+           {
+               ClassNames = "hover:bg-green-600 px-3 py-2 transition-all duration-300 rounded-r-lg",
+               Text = "<i class=\"fa-solid fa-trash\"></i>",
+               Action = "RemoveTodo",
+               Method = "post",
+               Input = list
+           })
+    </div>
+}
+else
+{
+    <div class="flex mb-4 items-center bg-red-500 rounded-lg pl-2 min-w-[300px] text-black">
+        <p class="w-full text-grey-darkest">@Model.Title</p>
+        @{
+            List<InputProps> list = new List<InputProps>();
+            list.Add(new InputProps
+                {
+                    Type = "text",
+                    Value = Model.ID,
+                    Name = "id"
+                });
+            list.Add(new InputProps
+                {
+                    Type = "text",
+                    Value = 1,
+                    Name = "isended"
+                });
+        }
+        @await Component.InvokeAsync("Button", new ButtonProps
+        {
+            ClassNames = "hover:bg-red-600 px-3 py-2 transition-all duration-300",
+            Action = "SetEnded",
+            Method = "post",
+            Text = "<i class=\"fa-solid fa-check\"></i>",
+            Input = list
+        })
+        @{
+            list.RemoveAt(1);
+        }
+        @await Component.InvokeAsync("Button", new ButtonProps {
+            ClassNames = "hover:bg-red-600 px-3 py-2 transition-all duration-300 rounded-r-lg",
+            Text = "<i class=\"fa-solid fa-trash\"></i>",
+            Action = "RemoveTodo",
+            Method = "post",
+            Input = list
+        })
+    </div>
+}
